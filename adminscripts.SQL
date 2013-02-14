@@ -33,3 +33,18 @@ order by avg_fragmentation_in_percent desc
 GO
 
 ALTER INDEX [indexname] ON [tablename] REBUILD/REORGANIZE
+
+SELECT
+   [Name] = Name
+  ,[AutoCreateStatistics] = CASE Is_Auto_Create_Stats_On WHEN 1 THEN 'ON' ELSE 'OFF' END
+  ,[AutoUpdateStatistics] = CASE Is_Auto_Update_Stats_On WHEN 1 THEN 'ON' ELSE 'OFF' END
+FROM sys.databases
+WHERE database_Id > 4
+
+--Updates stats where necessary
+USE [Database]
+GO
+
+--updates specifically
+UPDATE Statistics [Table] [index/columnsetname]
+EXEC sp_updatestats
