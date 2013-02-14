@@ -48,3 +48,20 @@ GO
 --updates specifically
 UPDATE Statistics [Table] [index/columnsetname]
 EXEC sp_updatestats
+
+USE [msdb]
+GO
+EXEC msdb.dbo.sp_add_alert @name=N'Severity 16 Error Alerts'
+,@message_id=0
+,@severity=16
+,@enabled=1
+,@delay_between_responses=10
+,@include_event_description_in=5
+,@category_name=N'[Uncategorized]'
+,@job_id=N'00000000-0000-0000-0000-000000000000'
+GO
+EXEC msdb.dbo.sp_add_notification
+@alert_name=N'Severity 16 Error Alerts'
+,@operator_name=N'yournamehere'
+,@notification_method=1
+GO
